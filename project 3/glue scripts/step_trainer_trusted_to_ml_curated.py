@@ -33,13 +33,13 @@ StepTrainerTrusted_node1770772825907 = glueContext.create_dynamic_frame.from_opt
 AccelerometerTrusted_node1770772826503 = glueContext.create_dynamic_frame.from_options(format_options={"multiLine": "false"}, connection_type="s3", format="json", connection_options={"paths": ["s3://stedi-lake-house-han/trusted/accelerometer/"], "recurse": True}, transformation_ctx="AccelerometerTrusted_node1770772826503")
 
 # Script generated for node SQL Query
-SqlQuery826 = '''
+SqlQuery839 = '''
 select a.*,b.* from trainer as a
-inner join accelerometer as b 
+join accelerometer as b 
 on a.sensorreadingtime = b.timestamp
 
 '''
-SQLQuery_node1770773802314 = sparkSqlQuery(glueContext, query = SqlQuery826, mapping = {"trainer":StepTrainerTrusted_node1770772825907, "accelerometer":AccelerometerTrusted_node1770772826503}, transformation_ctx = "SQLQuery_node1770773802314")
+SQLQuery_node1770773802314 = sparkSqlQuery(glueContext, query = SqlQuery839, mapping = {"trainer":StepTrainerTrusted_node1770772825907, "accelerometer":AccelerometerTrusted_node1770772826503}, transformation_ctx = "SQLQuery_node1770773802314")
 
 # Script generated for node ML Curated
 EvaluateDataQuality().process_rows(frame=SQLQuery_node1770773802314, ruleset=DEFAULT_DATA_QUALITY_RULESET, publishing_options={"dataQualityEvaluationContext": "EvaluateDataQuality_node1770772787307", "enableDataQualityResultsPublishing": True}, additional_options={"dataQualityResultsPublishing.strategy": "BEST_EFFORT", "observations.scope": "ALL"})
